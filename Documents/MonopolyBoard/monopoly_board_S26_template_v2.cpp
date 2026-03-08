@@ -111,7 +111,7 @@ public:
         // - If empty list: head=tail=player=new, new->next=head
         // - Else: tail->next=new, tail=new, tail->next=head
         // - nodeCount++
-        if (nodeCount == 40) { //Checks if capacity is full
+        if (nodeCount == MAX_SPACES) { //Checks if capacity is full
             return false;
         }
 
@@ -141,8 +141,17 @@ public:
         // - Stop exactly when you reach MAX_SPACES
         // - Return number successfully added
         // - Do not corrupt pointers if capacity is exceeded
-        cout << "addMany unwritten" << endl;
-        return 0;
+        int addManyCount = 0;
+
+        for (int i = 0; i < values.size(); i++) {
+            bool success = addSpace(values[i]);
+            if (success == true) {
+                addManyCount++;
+            } else {
+                break;
+            }
+        }
+        return addManyCount;
     }
 
     // -------------------------------
