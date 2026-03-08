@@ -111,8 +111,25 @@ public:
         // - If empty list: head=tail=player=new, new->next=head
         // - Else: tail->next=new, tail=new, tail->next=head
         // - nodeCount++
-        cout << "addSpace unwritten" << endl;
-        return false;
+        if (nodeCount == 40) { //Checks if capacity is full
+            return false;
+        }
+
+        Node<T>* newNode = new Node<T>(value);
+
+        if (nodeCount == 0) { //if board is empty
+            headNode = newNode;
+            tailNode = newNode;
+            tailNode->nextNode = headNode;
+            playerNode = newNode;
+        } else { //board is not empty
+            tailNode->nextNode = newNode;
+            tailNode = newNode;
+            tailNode->nextNode = headNode;
+        }
+
+        nodeCount++;
+        return true;
     }
 
     // -------------------------------
