@@ -189,7 +189,17 @@ public:
         // - Must not infinite loop
         // - Must handle empty list
         // - Output must be deterministic and readable
-        cout << "printFromPlayer unwritten" << endl;
+        if (nodeCount == 0) {
+            cout << "List is empty" << endl;
+            return;
+        }
+
+        Node<T>* currentNode = playerNode; //Temp node
+        for (int i = 0; i < count; i++) {
+            currentNode->data.print();
+            cout << endl;
+            currentNode = currentNode->nextNode;
+        }
     }
 
     // Optional helper: print full board once (one full cycle)
