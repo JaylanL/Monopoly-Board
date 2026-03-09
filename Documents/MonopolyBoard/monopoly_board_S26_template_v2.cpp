@@ -306,8 +306,20 @@ public:
         // TODO:
         // - Must be O(n), traverse exactly once with correct stop condition
         // - Do NOT rely on nodeCount for this method
-        cout << "countSpaces unwritten" << endl;
-        return 0;
+        int nodeCounter = 0;
+        Node<T>* currentNode = headNode;
+
+        if (currentNode == nullptr) { //if linked list is empty
+            return 0;
+        }
+
+        while (currentNode->nextNode != headNode) { //itterates and stops at tail node
+            nodeCounter++;
+            currentNode = currentNode->nextNode;
+        }
+
+        nodeCounter++; //Counting the tail Node
+        return nodeCounter;
     }
 
     // -------------------------------
@@ -392,7 +404,13 @@ int main() {
     spaces.push_back(MonopolySpace("Boardwalk", "Dark Blue", 400, 50));
     board.addMany(spaces);
 
+    // Option A examples:
+    board.removeByName("Baltic Avenue");
+    vector<string> brownProps = board.findByColor("Brown");
 
+    for (int i = 0; i < brownProps.size(); i++) {
+        cout << brownProps[i] << endl;
+    }
 
     // -------------------------------
     // Playable Traversal Loop
@@ -412,9 +430,6 @@ int main() {
     // -------------------------------
     // Advanced Feature Demos (students choose path)
     // -------------------------------
-    // Option A examples:
-    board.removeByName("Baltic Avenue");
-    vector<string> brownProps = board.findByColor("Brown");
     //
     // Option B example:
     // board.mirrorBoard();
