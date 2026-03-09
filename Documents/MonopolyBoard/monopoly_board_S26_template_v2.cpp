@@ -222,8 +222,45 @@ public:
         // - Maintain circular link tail->next=head
         // - If playerNode points to deleted node, move playerNode to a safe node
         // - nodeCount--
-        cout << "removeByName unwritten" << endl;
-        return false;
+        if (nodeCount == 0) {//empty node
+            return false;
+        }
+
+        Node<T>* currentNode = headNode;
+        Node<T>* previousNode = tailNode;
+
+        for (int i = 0; i < nodeCount; i++) { //traversing to see first node needed to be deleted
+            if (currentNode->data.propertyName == name) { //we found the node
+                break;
+            }
+            currentNode = currentNode->nextNode;
+            previousNode = previousNode->nextNode;
+        }
+        if (playerNode == currentNode) {
+            playerNode = headNode; //Saves playerNode to a safe node before dleeting currentNode
+        }
+        if (nodeCount == 1) {
+            delete currentNode;
+            headNode = nullptr;
+            tailNode = nullptr;
+            playerNode = nullptr;
+        } else if (currentNode->data.propertyName != name) { //could not find string
+            return false;
+        } else if (currentNode == headNode) { //delete head
+            headNode = currentNode->nextNode;
+            previousNode->nextNode = headNode;
+            delete currentNode;
+        } else if (currentNode == tailNode) { //delete tail
+            tailNode = previousNode;
+            previousNode->nextNode = headNode;
+            delete currentNode;
+        } else { //delete middle case
+            previousNode->nextNode = currentNode->nextNode;
+            delete currentNode;
+        }
+
+        nodeCount--; //update Nodes after deletion
+        return true;
     }
 
     // -------------------------------
@@ -376,8 +413,8 @@ int main() {
     // Advanced Feature Demos (students choose path)
     // -------------------------------
     // Option A examples:
-    // board.removeByName("Baltic Avenue");
-    // vector<string> brownProps = board.findByColor("Brown");
+    board.removeByName("Baltic Avenue");
+    vector<string> brownProps = board.findByColor("Brown");
     //
     // Option B example:
     // board.mirrorBoard();
