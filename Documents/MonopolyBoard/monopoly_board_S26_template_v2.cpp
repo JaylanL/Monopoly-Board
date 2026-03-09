@@ -330,7 +330,23 @@ public:
         // - Safely delete all nodes
         // - Tip: if tailNode exists, break the cycle first: tailNode->nextNode = nullptr
         // - Then delete like a normal singly linked list
-        cout << "clear unwritten" << endl;
+       if (nodeCount == 0) { //empty linked list
+           return;
+       }
+        Node<T>* currentNode = headNode;
+
+        tailNode->nextNode = nullptr;
+
+        for (int i = 0; i < nodeCount; i++) {
+            Node<T>* next = currentNode->nextNode;
+            delete currentNode;
+            currentNode = next;
+        }
+
+        headNode = nullptr; //reset all nodes so that they aren't absently pointing at something
+        tailNode = nullptr;
+        playerNode = nullptr;
+        nodeCount = 0;
     }
 };
 
@@ -426,6 +442,9 @@ int main() {
 
         cout << "Times passed GO so far: " << board.getPassGoCount() << endl;
     }
+
+    board.clear();
+    cout << "Number of spaces in board" << board.countSpaces() << endl;
 
     // -------------------------------
     // Advanced Feature Demos (students choose path)
