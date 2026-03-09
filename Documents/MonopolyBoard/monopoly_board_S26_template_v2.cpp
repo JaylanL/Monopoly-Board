@@ -164,7 +164,16 @@ public:
         // - Detect and track passing GO:
         //   increment passGoCount when a move crosses from tail back to head
         // - Must handle empty list safely
-        cout << "movePlayer unwritten" << endl;
+        if (nodeCount == 0) {
+            return;
+        }
+
+        for (int i = 0; i < steps; i++) {
+            if (playerNode == tailNode) {
+                passGoCount++;
+            }
+            playerNode = playerNode->nextNode;
+        }
     }
 
     int getPassGoCount() {
@@ -353,4 +362,96 @@ int main() {
     // board.mirrorBoard();
 
     return 0;
+}int main() {
+    srand(static_cast<unsigned>(time(nullptr)));
+
+    CircularLinkedList<MonopolySpace> board;
+
+    // -------------------------------
+    // Board Construction Phase
+    // -------------------------------
+    // You decide how to build the board:
+    // - hardcode spaces, load from file, or generate spaces programmatically
+    // The only requirement: never exceed MAX_SPACES and keep the list circular.
+    //
+    // Example (hardcoded) usage:
+    // vector<MonopolySpace> spaces;
+    // spaces.push_back(MonopolySpace("GO","None",0,0));
+    // ...
+    // board.addMany(spaces);
+    //
+    // NOTE: This starter calls addSpace once to show the intended API,
+    // but your final submission should build a meaningful board.
+    vector<MonopolySpace> spaces;
+    spaces.push_back(MonopolySpace("GO", "None", 0, 0));
+    spaces.push_back(MonopolySpace("Mediterranean Avenue", "Brown", 60, 2));
+    spaces.push_back(MonopolySpace("Community Chest", "None", 0, 0));
+    spaces.push_back(MonopolySpace("Baltic Avenue", "Brown", 60, 4));
+    spaces.push_back(MonopolySpace("Income Tax", "None", 0, 0));
+    spaces.push_back(MonopolySpace("Reading Railroad", "Railroad", 200, 25));
+    spaces.push_back(MonopolySpace("Oriental Avenue", "Light Blue", 100, 6));
+    spaces.push_back(MonopolySpace("Chance", "None", 0, 0));
+    spaces.push_back(MonopolySpace("Vermont Avenue", "Light Blue", 100, 6));
+    spaces.push_back(MonopolySpace("Connecticut Avenue", "Light Blue", 120, 8));
+    spaces.push_back(MonopolySpace("Jail", "None", 0, 0));
+    spaces.push_back(MonopolySpace("St. Charles Place", "Pink", 140, 10));
+    spaces.push_back(MonopolySpace("Electric Company", "Utility", 150, 0));
+    spaces.push_back(MonopolySpace("States Avenue", "Pink", 140, 10));
+    spaces.push_back(MonopolySpace("Virginia Avenue", "Pink", 160, 12));
+    spaces.push_back(MonopolySpace("Pennsylvania Railroad", "Railroad", 200, 25));
+    spaces.push_back(MonopolySpace("St. James Place", "Orange", 180, 14));
+    spaces.push_back(MonopolySpace("Community Chest", "None", 0, 0));
+    spaces.push_back(MonopolySpace("Tennessee Avenue", "Orange", 180, 14));
+    spaces.push_back(MonopolySpace("New York Avenue", "Orange", 200, 16));
+    spaces.push_back(MonopolySpace("Free Parking", "None", 0, 0));
+    spaces.push_back(MonopolySpace("Kentucky Avenue", "Red", 220, 18));
+    spaces.push_back(MonopolySpace("Chance", "None", 0, 0));
+    spaces.push_back(MonopolySpace("Indiana Avenue", "Red", 220, 18));
+    spaces.push_back(MonopolySpace("Illinois Avenue", "Red", 240, 20));
+    spaces.push_back(MonopolySpace("B&O Railroad", "Railroad", 200, 25));
+    spaces.push_back(MonopolySpace("Atlantic Avenue", "Yellow", 260, 22));
+    spaces.push_back(MonopolySpace("Ventnor Avenue", "Yellow", 260, 22));
+    spaces.push_back(MonopolySpace("Water Works", "Utility", 150, 0));
+    spaces.push_back(MonopolySpace("Marvin Gardens", "Yellow", 280, 24));
+    spaces.push_back(MonopolySpace("Go To Jail", "None", 0, 0));
+    spaces.push_back(MonopolySpace("Pacific Avenue", "Green", 300, 26));
+    spaces.push_back(MonopolySpace("North Carolina Avenue", "Green", 300, 26));
+    spaces.push_back(MonopolySpace("Community Chest", "None", 0, 0));
+    spaces.push_back(MonopolySpace("Pennsylvania Avenue", "Green", 320, 28));
+    spaces.push_back(MonopolySpace("Short Line Railroad", "Railroad", 200, 25));
+    spaces.push_back(MonopolySpace("Chance", "None", 0, 0));
+    spaces.push_back(MonopolySpace("Park Place", "Dark Blue", 350, 35));
+    spaces.push_back(MonopolySpace("Luxury Tax", "None", 0, 0));
+    spaces.push_back(MonopolySpace("Boardwalk", "Dark Blue", 400, 50));
+    board.addMany(spaces);
+
+
+
+    // -------------------------------
+    // Playable Traversal Loop
+    // -------------------------------
+    for (int turn = 1; turn <= 10; turn++) {
+        int roll = rollDice2to12();
+        cout << "\nTurn " << turn << " | Rolled: " << roll << endl;
+
+        board.movePlayer(roll);
+
+        cout << "Board view from player (next 5 spaces):" << endl;
+        board.printFromPlayer(5);
+
+        cout << "Times passed GO so far: " << board.getPassGoCount() << endl;
+    }
+
+    // -------------------------------
+    // Advanced Feature Demos (students choose path)
+    // -------------------------------
+    // Option A examples:
+    // board.removeByName("Baltic Avenue");
+    // vector<string> brownProps = board.findByColor("Brown");
+    //
+    // Option B example:
+    // board.mirrorBoard();
+
+    return 0;
 }
+
